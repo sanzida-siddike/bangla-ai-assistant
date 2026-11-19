@@ -21,4 +21,4 @@ Add your key in .streamlit/secrets.toml:
 GROQ_API_KEY = "your_key"
 
 ## 👩‍💻 Author
-Sanzida Siddike, Data Analyst & Computer Instructor
+Sanzida Siddike, Data Analyst & Computer Instructor.
