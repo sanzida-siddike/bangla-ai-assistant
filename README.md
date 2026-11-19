@@ -4,6 +4,9 @@ An AI study assistant that reads your PDF notes and answers questions in simple 
 
 🔗 **Live App:** https://bangla-ai-sanzida.streamlit.app
 
+<img width="1920" height="914" alt="image" src="https://github.com/user-attachments/assets/be20ecd2-191c-476c-b536-7eb2aff34567" />
+
+
 ## ✨ Features
 - Upload any PDF (English or Bangla)
 - Ask questions and get answers in Bangla
