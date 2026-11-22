@@ -1,4 +1,8 @@
 [theme]
-base = "light"
-primaryColor = "#4f46e5"
-textColor = "#1f2937"
+baseFontSize = 17
+
+[theme.light]
+primaryColor = "#6366f1"
+
+[theme.dark]
+primaryColor = "#7c7ff5"
