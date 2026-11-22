@@ -1,27 +1,47 @@
-# 📚 Bangla AI Learning Assistant
+# Shikkha.ai 📚
+**Teach smarter. Learn smarter. In Bangla.**
 
-An AI study assistant that reads your PDF notes and answers questions in simple Bangla.
+Shikkha.ai is a Bangla-first AI learning assistant for **students and teachers**.
+Upload notes, books, slides or research papers (PDF, Word, PowerPoint, Excel, TXT) and:
 
-🔗 **Live App:** https://bangla-ai-sanzida.streamlit.app
+🔗 Live app: https://bangla-ai-sanzida.streamlit.app
 
-<img width="1920" height="914" alt="image" src="https://github.com/user-attachments/assets/be20ecd2-191c-476c-b536-7eb2aff34567" />
+## Features
 
+### 💬 চ্যাট (Chat)
+- Ask questions about your files in Bangla or English
+- RAG search (TF-IDF word + character n-grams) with page/slide sources for every answer
+- Add many files at once with the **+** button
 
-## ✨ Features
-- Upload any PDF (English or Bangla)
-- Ask questions and get answers in Bangla
-- One-click: Summary, Key Points, MCQ, Easy Explanation
-- Chat history and download
+### 🎯 অনুশীলন (Practice, for students)
+- **MCQ Quiz**: normal or university-admission level
+- **Weak-topic finder**: tracks wrong answers by topic and makes a new quiz on weak topics
+- **Viva practice**: AI asks oral questions, grades your answer out of 10 with feedback
+- **Past-question analysis**: finds repeated topics and likely questions from old papers
+- Choose a file and a page/slide range
 
-## 🛠️ Tech Stack
-Python · Streamlit · Groq LLM (gpt-oss-120b) · PyPDF
+### 📝 প্রশ্নপত্র (Question paper, for teachers)
+- **SSC/HSC সৃজনশীল** (উদ্দীপক + ক খ গ ঘ)
+- **Diploma (BTEB)**: editable pattern (final / class test)
+- **University**: presets for National, Public and Private universities (Final, Mid, Incourse, Quiz/CT) and research papers,
+  all editable (sections × questions × marks, "answer any N")
+- **Auto-detect pattern** from an old question paper
+- Research-paper questions: methodology, findings, critique, contribution
+- Optional Bloom level + CO tags
+- Download as **Word (.docx)**, with or without answers
 
-## 🚀 Run Locally
-pip install -r requirements.txt
-streamlit run app.py
+## Tech
+Python · Streamlit · Groq (`openai/gpt-oss-120b`) · scikit-learn TF-IDF RAG · pypdf · python-docx · python-pptx · openpyxl
 
-Add your key in .streamlit/secrets.toml:
-GROQ_API_KEY = "your_key"
+## Run locally
+```bash
+py -m pip install -r requirements.txt
+py -m streamlit run app.py
+```
+Put your key in `.streamlit/secrets.toml` (this file is never uploaded to GitHub):
+```toml
+GROQ_API_KEY = "your-key-here"
+```
 
-## 👩‍💻 Author
-Sanzida Siddike, Data Analyst & Computer Instructor.
+## Author
+Made by [Sanzida Siddike](https://github.com/sanzida-siddike), Computer Instructor & M.Sc SE student (DIU).
