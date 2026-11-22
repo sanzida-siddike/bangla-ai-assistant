@@ -55,6 +55,7 @@ def brand_html(small=""):
 css = """
 @import url('https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@500;600;700&family=Noto+Sans+Bengali:wght@400;500;600&family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
 
+html {font-size: 17px;}   /* সব লেখা একটু বড় */
 :root {--ac: #6366f1; --ac2: #8b5cf6; --soft: rgba(99,102,241,.10); --line: rgba(128,128,128,.22);}
 /* লেখার font: English এ Inter, বাংলায় Noto Sans Bengali (পরিষ্কার, পড়তে আরাম) */
 .stApp, .stApp p, .stApp li, .stApp label, .stApp input, .stApp textarea, .stApp button,
@@ -76,9 +77,12 @@ h1, h2, h3, h4, .brand, .hello h1, .paper-head h3, .step b, .feat b, .score b {
   opacity: .55; margin-left: 8px; letter-spacing: 0;}
 [data-testid="stButtonGroup"] button {border-radius: 10px !important;}
 [data-testid="stButtonGroup"] button p {font-weight: 500;}
+.st-key-theme_btn button {border: 1px solid var(--line) !important; border-radius: 10px !important; padding: 4px 10px !important;
+  min-height: 38px;}
+.st-key-theme_btn button:hover {border-color: var(--ac) !important;}
 
 /* খালি অবস্থার শুভেচ্ছা */
-.hello {text-align: center; margin: 6vh 0 22px;}
+.hello {text-align: center; margin: 2vh 0 18px;}
 .hello h1 {font-size: 36px; font-weight: 700; letter-spacing: 0; word-spacing: .18em; margin: 0; padding: 0; line-height: 1.25;}
 .hello p {opacity: .62; font-size: 16px; margin: 10px 0 0;}
 .hello .tag {display: inline-block; font-size: 12.5px; margin-bottom: 14px; padding: 5px 13px;
@@ -129,7 +133,7 @@ h1, h2, h3, h4, .brand, .hello h1, .paper-head h3, .step b, .feat b, .score b {
 [aria-label="Chat message from user"] {flex: 0 1 auto !important; max-width: 85%;
   background: rgba(128,128,128,.12); border-radius: 18px; padding: 8px 16px;}
 [data-testid^="stChatMessageAvatar"] {border: none; background: var(--soft); color: var(--ac);}
-[data-testid="stChatMessageContent"] p, [data-testid="stChatMessageContent"] li {font-size: 16px; line-height: 1.8;}
+[data-testid="stChatMessageContent"] p, [data-testid="stChatMessageContent"] li {font-size: 17px; line-height: 1.8;}
 [data-testid="stChatMessageContent"] h1, [data-testid="stChatMessageContent"] h2 {font-size: 20px; font-weight: 700;}
 [data-testid="stChatMessageContent"] h3 {font-size: 17px; font-weight: 700;}
 [data-testid="stChatInput"] textarea {font-size: 16px;}
@@ -204,6 +208,76 @@ h1, h2, h3, h4, .brand, .hello h1, .paper-head h3, .step b, .feat b, .score b {
 """
 tag = "style"
 st.markdown(f"<{tag}>{css}</{tag}>", unsafe_allow_html=True)
+
+# ======================= আলো / অন্ধকার (🌙 / ☀) বোতাম =======================
+# Streamlit এর নিজের theme মেনু সব জায়গায় দেখা যায় না, তাই অ্যাপের ভেতরেই বোতাম।
+PALETTE = {
+    "dark": {"bg": "#0f1117", "bg2": "#1b1e27", "txt": "#f3f4f6", "muted": "#a1a5b3", "line": "rgba(255,255,255,.14)"},
+    "light": {"bg": "#ffffff", "bg2": "#f4f5f8", "txt": "#1d2130", "muted": "#5d6274", "line": "rgba(20,20,40,.14)"},
+}
+
+def system_dark():
+    try:
+        return st.context.theme.type == "dark"
+    except Exception:
+        return False
+
+def is_dark():
+    d = st.session_state.get("dark")
+    return system_dark() if d is None else d
+
+def toggle_theme():
+    st.session_state.dark = not is_dark()
+
+def theme_css(c):
+    """বাছাই করা রং পুরো অ্যাপে জোর করে বসায়"""
+    return f"""
+.stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"], [data-testid="stBottom"] > div,
+[data-testid="stBottomBlockContainer"] {{background: {c['bg']} !important; color: {c['txt']} !important;}}
+[data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child {{background: {c['bg2']} !important;}}
+.stApp p, .stApp li, .stApp label, .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp strong,
+[data-testid="stMarkdownContainer"], [data-testid="stWidgetLabel"], [data-testid="stHeader"] button,
+.stApp button p, .stApp summary, .stApp summary span, [data-testid="stFileUploaderDropzone"] span,
+[data-testid="stFileUploaderDropzone"] small, [data-testid="stFileUploaderFileName"],
+[data-testid="stSidebarCollapseButton"] button, [data-testid="stExpandSidebarButton"],
+[data-testid="stBaseButton-headerNoPadding"], .stApp [data-testid="stIconMaterial"] {{color: {c['txt']} !important;}}
+[data-testid="stCaptionContainer"], .stApp small, .meta, .side-tag, .side-foot {{color: {c['muted']} !important;}}
+.stApp input, .stApp textarea, [data-baseweb="input"], [data-baseweb="input"] > div, [data-baseweb="textarea"],
+[data-baseweb="select"] > div, [data-testid="stChatInput"] > div, [data-testid="stChatInput"] textarea {{
+  background: {c['bg2']} !important; color: {c['txt']} !important; border-color: {c['line']} !important;}}
+[data-baseweb="select"] div, [data-baseweb="select"] span {{color: {c['txt']} !important;}}
+[data-testid="stSelectbox"] [role="group"], [data-testid="stSelectbox"] input, [data-testid="stSelectbox"] button,
+[data-testid="stMultiSelect"] [role="group"], [data-testid="stNumberInput"] button {{
+  background-color: {c['bg2']} !important; color: {c['txt']} !important; border-color: {c['line']} !important;}}
+[data-testid="stSelectbox"] svg {{color: {c['txt']} !important;}}
+[role="listbox"], [role="option"], [role="dialog"] {{background-color: {c['bg2']} !important; color: {c['txt']} !important;}}
+label[data-testid="stRadioOption"]:not([data-selected="true"]) > div > div:first-child {{
+  background-color: {c['bg2']} !important; border: 1.5px solid {c['muted']} !important;}}
+[data-testid="stToast"] {{background: {c['bg2']} !important; color: {c['txt']} !important;}}
+[data-testid="stToast"] * {{color: {c['txt']} !important;}}
+[data-baseweb="popover"] ul, [data-baseweb="popover"] li, [data-baseweb="menu"], [data-testid="stPopoverBody"] {{
+  background: {c['bg2']} !important; color: {c['txt']} !important;}}
+[data-testid="stVerticalBlockBorderWrapper"], [data-testid="stForm"], [data-testid="stExpander"] details,
+.stButton button[kind="secondary"], .stDownloadButton button, [data-testid="stPopover"] button {{
+  border-color: {c['line']} !important;}}
+[data-testid="stButtonGroup"] button {{background: transparent !important; border-color: {c['line']} !important;}}
+[data-testid="stButtonGroup"] button[aria-checked="true"] {{background: rgba(99,102,241,.16) !important;
+  border-color: #6366f1 !important;}}
+[data-testid="stButtonGroup"] button[aria-checked="true"] p, [data-testid="stButtonGroup"] button[aria-checked="true"] span {{
+  color: #7c7ff5 !important;}}
+.stButton button[kind="primary"] p, [data-testid="stFormSubmitButton"] button p,
+.stButton button[kind="primary"] span {{color: #fff !important;}}
+.brand span {{color: transparent !important;}}
+[aria-label="Chat message from user"] {{background: {c['bg2']} !important;}}
+"""
+
+if st.session_state.get("dark") is not None:
+    extra = ""
+    if st.session_state.dark != system_dark():
+        # টেবিলটা (data editor) ছবির মতো আঁকা হয়, তাই রং উল্টে দিয়ে থিমের সাথে মেলাই
+        extra = '[data-testid="stDataFrame"] {filter: invert(1) hue-rotate(180deg);}'
+    st.markdown(f"<{tag}>{theme_css(PALETTE['dark' if st.session_state.dark else 'light'])}{extra}</{tag}>",
+                unsafe_allow_html=True)
 
 # ======================= অবস্থা (session state) =======================
 TABS = ["চ্যাট", "অনুশীলন", "প্রশ্নপত্র"]
@@ -844,8 +918,11 @@ TAB_LABEL = {"চ্যাট": ":material/forum: চ্যাট", "অনু�
 top = st.container(key="topbar")
 h1, h2 = top.columns([2, 3], vertical_alignment="center")
 h1.markdown(brand_html("Learn · Teach"), unsafe_allow_html=True)
-tab = h2.segmented_control("tab", TABS, key="tab", on_change=keep_tab, label_visibility="collapsed",
-                           format_func=TAB_LABEL.get) or "চ্যাট"
+right = h2.container(horizontal=True, vertical_alignment="center", gap="small", wrap=False)
+tab = right.segmented_control("tab", TABS, key="tab", on_change=keep_tab, label_visibility="collapsed",
+                              format_func=TAB_LABEL.get) or "চ্যাট"
+right.button("", key="theme_btn", icon=":material/light_mode:" if is_dark() else ":material/dark_mode:",
+             on_click=toggle_theme, help="আলো / অন্ধকার mode")
 
 # ======================= চ্যাট: নিচের বক্স =======================
 typed = None
