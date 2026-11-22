@@ -1,7 +1,9 @@
 # Shikkha.ai 📚
 **Teach smarter. Learn smarter. In Bangla.**
+<img width="1908" height="884" alt="image" src="https://github.com/user-attachments/assets/5f2d4da7-f72f-42e6-a6d3-644353b04759" />
 
-Shikkha.ai is a Bangla-first AI learning assistant for **students and teachers**.
+
+Shikkha.ai is a Bangla- AI learning assistant for **students and teachers**.
 Upload notes, books, slides or research papers (PDF, Word, PowerPoint, Excel, TXT) and:
 
 🔗 Live app: https://bangla-ai-sanzida.streamlit.app
